@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: text-generation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: text-generation
+  template:
+    metadata:
+      labels:
+        app: text-generation
+    spec:
+      containers:
+      - name: text-generation
+        image: diegomunozc/transformers:latest
+        volumeMounts:
+          - name: models
+            mountPath: /app/models
+      volumes:
+      - name: models
+        hostPath:
+          path: /home/diego/personal-apps/drawing_agents/text_generation/models
+          type: DirectoryOrCreate
